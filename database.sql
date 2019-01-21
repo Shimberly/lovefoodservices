@@ -8,7 +8,7 @@ CREATE TABLE usuario(
   clave varchar(255),
   sexo varchar(255),
   fecha_nacimiento varchar(255),
-   	PRIMARY KEY (id);
+   	PRIMARY KEY (id)
 );
 
 CREATE TABLE respuesta(
@@ -34,7 +34,7 @@ CREATE TABLE respuesta(
   PRIMARY KEY (id),
   CONSTRAINT  idusuario 
       FOREIGN KEY ( idusuario )
-      REFERENCES   usuario  ( id ));
+      REFERENCES   usuario  ( id )
 );
 
 CREATE TABLE informacion(
@@ -47,7 +47,7 @@ CREATE TABLE informacion(
   PRIMARY KEY (id),
   CONSTRAINT  idusuario 
       FOREIGN KEY ( idusuario )
-      REFERENCES   usuario  ( id ));
+      REFERENCES   usuario  ( id )
 );
 
 INSERT INTO usuario ( nombre,apellido,numero,correo,clave,sexo,fecha_nacimiento) VALUES
