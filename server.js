@@ -156,3 +156,243 @@ app.post('/GuardarUsuario', (req, res) => {
         
     });
 });
+
+//RESPUESTA
+app.get('/mostrarRespuesta/:id',(req,res)=>{
+    var client = new pg.Client(conString);
+    var id=req.params.id;
+  
+    client.connect(function(err) {
+       if(err) {
+           return console.error('could not connect to postgres', err);
+           return res.status(500).json({success: false, data: err});
+       }
+
+       client.query('SELECT * FROM respuesta WHERE id=' + id + ';', function(err, result) {
+           if(err) {
+               return console.error('error running query', err);
+           }
+          
+           //console.log(result);
+            client.end();
+           return res.json(result.rows);
+      
+       });
+      
+   });
+  
+  
+});
+
+
+app.get('/listarRespuestas', (req, res, next) => {
+   var client = new pg.Client(conString);
+   client.connect(function(err) {
+       if(err) {
+           return console.error('could not connect to postgres', err);
+           return res.status(500).json({success: false, data: err});
+       }
+
+       client.query('SELECT * FROM respuesta', function(err, result) {
+           if(err) {
+               return console.error('error running query', err);
+           }
+
+           client.end();
+           return res.json(result.rows);
+          
+       });
+   });
+});
+
+app.put('/actualizarRespuesta',(req,res)=>{
+    var client = new pg.Client(conString);
+    var id=req.body.id;
+    
+    client.connect(function(err) {
+        if(err) {
+            return console.error('could not connect to postgres', err);
+            return res.status(500).json({success: false, data: err});
+        }
+  
+        client.query("UPDATE respuesta SET rspPreferencia='"+req.body.rspPreferencia+"', rspVerde='"+req.body.rspVerde+"', rspDesayunoSalado='"+req.body.rspDesayunoSalado+"',rspDesayunoDulce='"+req.body.rspDesayunoDulce+"',rspAlmuerzo='"+req.body.rspAlmuerzo+"',rspMarisco='"+req.body.rspMarisco+"', rspSopa='"+req.body.rspSopa+"', rspCena='"+req.body.rspCena+"', rspComidaTipicaCosta='"+req.body.rspComidaTipicaCosta+"', rspComidaTipicaSierra='"+req.body.rspComidaTipicaSierra+"', rspComidaTipicaOriente='"+req.body.rspComidaTipicaOriente+"', rspProteina='"+req.body.rspProteina+"', rspPostres='"+req.body.rspPostres+"' , rspSaboresDulces='"+req.body.rspSaboresDulces+"', rspBebida='"+req.body.rspBebida+"', rspComidaExtranjera='"+req.body.rspComidaExtranjera+"', rspComidaRapida='"+req.body.rspComidaRapida+"' WHERE id='" + id + "';", function(err, result) {
+            
+            if(err) {
+                  return console.error('error running query', err);
+            }
+            
+            //console.log(result);
+            client.end();
+            return res.json(result);
+        });
+     });
+});
+
+
+app.delete('/eliminarRespuesta',(req,res)=>{
+    var client = new pg.Client(conString);
+    var id=req.body.id;
+  
+    client.connect(function(err) {
+       if(err) {
+           return console.error('could not connect to postgres', err);
+           return res.status(500).json({success: false, data: err});
+       }
+
+       client.query('DELETE FROM respuesta WHERE id=' + id + ';', function(err, result) {
+          
+           if(err) {
+               return console.error('error running query', err);
+           }
+          
+           //console.log(result);
+            client.end();
+           return res.json(result);
+       });
+   });
+  
+  
+});
+
+app.post('/GuardarRespuesta', (req, res) => {
+    var client = new pg.Client(conString);
+    client.connect(function(err) {
+        if(err) {
+            return console.error('could not connect to postgres', err);
+            return res.status(500).json({success: false, data: err});
+        }
+      
+        console.log("miau "+util.inspect(req,false,null));
+       
+        client.query("INSERT INTO respuesta (idusuario,rspPreferencia,rspVerde,rspDesayunoSalado,rspDesayunoDulce,rspAlmuerzo,rspMarisco,rspSopa,rspCena,rspComidaTipicaCosta,rspComidaTipicaSierra,rspComidaTipicaOriente,rspProteina,rspPostres,rspSaboresDulces,rspBebida,rspComidaExtranjera,rspComidaRapida) VALUES ('"+req.body.idusuario+"', '"+req.body.rpsPreferencia+"', '"+req.body.rspVerde+"', '"+req.body.rspDesayunoSalado+"', '"+req.body.rspDesayunoDulce+"', '"+req.body.rspAlmuerzo+"',  '"+req.body.rspMarisco+"', '"+req.body.rspSopa+"', '"+req.body.rspCena+"','"+req.body.rspComidaTipicaCosta+"',"+req.body.rspComidaTipicaSierra+"','"+req.body.rspComidaTipicaOriente+"', '"+req.body.rspProteina+"', '"+req.body.rspPostres+"', '"+req.body.rspSaboresDulce+"', '"+req.body.rspBebida+"', '"+req.body.rspComidaExtranjera+"', '"+req.body.rspComidaRapida+"');", function(err, result) {
+            if(err) {
+                return console.error('error running query', err);
+            }
+       
+            //console.log(result);
+            client.end();
+            return res.json(result.rows);
+           
+        });
+       
+    });
+});
+ 
+app.get('/listarInformacion', (req, res, next) => {
+    var client = new pg.Client(conString);
+    client.connect(function(err) {
+        if(err) {
+            return console.error('could not connect to postgres', err);
+            return res.status(500).json({success: false, data: err});
+        }
+ 
+        client.query('SELECT * FROM informacion', function(err, result) {
+            if(err) {
+                return console.error('error running query', err);
+            }
+ 
+            client.end();
+            return res.json(result.rows);
+           
+        });
+    });
+ });
+ 
+
+app.put('/actualizarInformacion',(req,res)=>{
+    var client = new pg.Client(conString);
+    var id=req.body.id;
+    
+    client.connect(function(err) {
+        if(err) {
+            return console.error('could not connect to postgres', err);
+            return res.status(500).json({success: false, data: err});
+        }
+  
+        client.query("UPDATE informacion SET universidad='"+req.body.universidad+"', ciudad='"+req.body.ciudad+"', pais='"+req.body.pais+"',carrera='"+req.body.carrera+"' WHERE id='" + id + "';", function(err, result) {
+            
+            if(err) {
+                  return console.error('error running query', err);
+            }
+            
+            //console.log(result);
+            client.end();
+            return res.json(result);
+        });
+     });
+});
+
+app.delete('/eliminarInformacion',(req,res)=>{
+    var client = new pg.Client(conString);
+    var id=req.body.id;
+  
+    client.connect(function(err) {
+       if(err) {
+           return console.error('could not connect to postgres', err);
+           return res.status(500).json({success: false, data: err});
+       }
+
+       client.query('DELETE FROM informacion WHERE id=' + id + ';', function(err, result) {
+          
+           if(err) {
+               return console.error('error running query', err);
+           }
+          
+           //console.log(result);
+            client.end();
+           return res.json(result);
+       });
+   });
+  
+  
+});
+
+app.get('/mostrarInformacion/:id',(req,res)=>{
+    var client = new pg.Client(conString);
+    var id=req.params.id;
+  
+    client.connect(function(err) {
+       if(err) {
+           return console.error('could not connect to postgres', err);
+           return res.status(500).json({success: false, data: err});
+       }
+
+       client.query('SELECT * FROM informacion WHERE id=' + id + ';', function(err, result) {
+           if(err) {
+               return console.error('error running query', err);
+           }
+          
+           //console.log(result);
+            client.end();
+           return res.json(result.rows);
+      
+       });
+      
+   });
+    
+});
+
+app.post('/GuardarInformacion', (req, res) => {
+    var client = new pg.Client(conString);
+    client.connect(function(err) {
+        if(err) {
+            return console.error('could not connect to postgres', err);
+            return res.status(500).json({success: false, data: err});
+        }
+      
+        console.log("miau "+util.inspect(req,false,null));
+       
+        client.query("INSERT INTO  informacion  (idusuario,universidad,ciudad,pais,carrera) VALUES ('"+req.body.idusuario+"', '"+req.body.rpsUniversidad+"', '"+req.body.rspCiudad+"', '"+req.body.rspPais+"', '"+req.body.rspCarrera+"');", function(err, result) {
+            if(err) {
+                return console.error('error running query', err);
+            }
+       
+            //console.log(result);
+            client.end();
+            return res.json(result.rows);
+           
+        });
+       
+    });
+});
+ 
