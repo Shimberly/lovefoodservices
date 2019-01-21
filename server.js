@@ -382,7 +382,7 @@ app.post('/GuardarInformacion', (req, res) => {
       
         console.log("miau "+util.inspect(req,false,null));
        
-        client.query("INSERT INTO  informacion  (idusuario,universidad,ciudad,pais,carrera) VALUES ('"+req.body.idusuario+"', '"+req.body.rpsUniversidad+"', '"+req.body.rspCiudad+"', '"+req.body.rspPais+"', '"+req.body.rspCarrera+"');", function(err, result) {
+        client.query("INSERT INTO  informacion  (idusuario,universidad,ciudad,pais,carrera) VALUES ("+req.body.idusuario+", '"+req.body.universidad+"', '"+req.body.ciudad+"', '"+req.body.pais+"', '"+req.body.carrera+"');", function(err, result) {
             if(err) {
                 return console.error('error running query', err);
             }
