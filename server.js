@@ -299,7 +299,7 @@ app.get('/listarInformacion', (req, res, next) => {
 
 app.put('/actualizarInformacion',(req,res)=>{
     var client = new pg.Client(conString);
-    var id=req.body.id;
+    var idusuario=req.body.idusuario;
     
     client.connect(function(err) {
         if(err) {
@@ -307,7 +307,7 @@ app.put('/actualizarInformacion',(req,res)=>{
             return res.status(500).json({success: false, data: err});
         }
   
-        client.query("UPDATE informacion SET universidad='"+req.body.universidad+"', ciudad='"+req.body.ciudad+"', pais='"+req.body.pais+"',carrera='"+req.body.carrera+"',preferencia='"+ req.body.preferencia +"',descripcion='"+req.body.descripcion+"',instagram='"+req.body.instagram+"',numero='"+req.body.numero+"', WHERE id='" + id + "';", function(err, result) {
+        client.query("UPDATE informacion SET universidad='"+req.body.universidad+"', ciudad='"+req.body.ciudad+"', preferencia='"+ req.body.preferencia +"',descripcion='"+req.body.descripcion+"',instagram='"+req.body.instagram+"',numero='"+req.body.numero+"', WHERE idusuario='" + idusuario + "';", function(err, result) {
             
             if(err) {
                   return console.error('error running query', err);
@@ -380,7 +380,7 @@ app.post('/GuardarInformacion', (req, res) => {
       
         console.log("miau "+util.inspect(req,false,null));
        
-        client.query("INSERT INTO  informacion  (idusuario,universidad,ciudad,pais,carrera,descripcion,instagram,preferencia,numero) VALUES ("+req.body.idusuario+", '"+req.body.universidad+"', '"+req.body.ciudad+"', '"+req.body.pais+"', '"+req.body.carrera+"','"+req.body.descripcion+"', '"+req.body.instagram+"', '"+req.body.preferencia+"','"+req.body.numero+"');", function(err, result) {
+        client.query("INSERT INTO  informacion  (idusuario,universidad,ciudad,descripcion,instagram,preferencia,numero) VALUES ("+req.body.idusuario+", '"+req.body.universidad+"', '"+req.body.ciudad+"','"+req.body.descripcion+"', '"+req.body.instagram+"', '"+req.body.preferencia+"','"+req.body.numero+"');", function(err, result) {
             if(err) {
                 return console.error('error running query', err);
             }
