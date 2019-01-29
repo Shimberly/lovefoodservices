@@ -14,7 +14,6 @@ CREATE TABLE usuario(
 CREATE TABLE respuesta(
   id serial NOT NULL,
   idusuario integer,
-  rsppreferencia varchar(255),
   rspverde varchar(255),
   rspdesayunoSalado varchar(255),
   rspdesayunoDulce varchar(255),
@@ -44,6 +43,9 @@ CREATE TABLE informacion(
   ciudad varchar(255),
   pais varchar(255),
   carrera varchar(255),
+  descripcion varchar(255),
+  instagram varchar(255),
+  preferencia varchar(255),
   PRIMARY KEY (id),
   CONSTRAINT  idusuario 
       FOREIGN KEY ( idusuario )
