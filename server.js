@@ -304,10 +304,9 @@ app.put('/actualizarInformacion',(req,res)=>{
     client.connect(function(err) {
         if(err) {
             return console.error('could not connect to postgres', err);
-            return res.status(500).json({success: false, data: err});
         }
   
-        client.query("UPDATE informacion SET universidad='"+req.body.universidad+"', ciudad='"+req.body.ciudad+"', preferencia='"+ req.body.preferencia +"',descripcion='"+req.body.descripcion+"',instagram='"+req.body.instagram+"',numero='"+req.body.numero+"', WHERE idusuario='" + idusuario + "';", function(err, result) {
+        client.query("UPDATE informacion SET universidad='"+req.body.universidad+"',ciudad='"+req.body.ciudad+"',preferencia='"+ req.body.preferencia+"',descripcion='"+req.body.descripcion+"',instagram='"+req.body.instagram+"',numero='"+req.body.numero+"' WHERE idusuario='" + idusuario + "';", function(err, result) {
             
             if(err) {
                   return console.error('error running query', err);
@@ -315,7 +314,7 @@ app.put('/actualizarInformacion',(req,res)=>{
             
             //console.log(result);
             client.end();
-            return res.json(result);
+            return res.json("Valio");
         });
      });
 });
