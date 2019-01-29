@@ -94,7 +94,7 @@ app.put('/actualizarUsuario',(req,res)=>{
             return res.status(500).json({success: false, data: err});
         }
 
-        client.query("UPDATE usuario SET correo='"+req.body.correo+"', clave='"+req.body.clave+"', nombre='"+req.body.nombre+"',apellido='"+req.body.apellido+"',numero='"+req.body.numero+"',fecha_nacimiento='"+req.body.fecha_nacimiento+"', sexo='"+req.body.sexo+"' WHERE id='" + id + "';", function(err, result) {
+        client.query("UPDATE usuario SET correo='"+req.body.correo+"', clave='"+req.body.clave+"', nombre='"+req.body.nombre+"',apellido='"+req.body.apellido+"',fecha_nacimiento='"+req.body.fecha_nacimiento+"', sexo='"+req.body.sexo+"' WHERE id='" + id + "';", function(err, result) {
             
             if(err) {
                 return console.error('error running query', err);
@@ -132,31 +132,6 @@ app.delete('/eliminarUsuario',(req,res)=>{
 
 
 });
-    
-app.post('/GuardarUsuario', (req, res) => {
-    var client = new pg.Client(conString);
-    client.connect(function(err) {
-        if(err) {
-            return console.error('could not connect to postgres', err);
-            return res.status(500).json({success: false, data: err});
-        }
-        
-        console.log("miau "+util.inspect(req,false,null));
-        
-        client.query("INSERT INTO  usuario  (nombre,apellido,numero,correo,clave,sexo,fecha_nacimiento) VALUES ('"+req.body.nombre+"', '"+req.body.apellido+"', '"+req.body.numero+"', '"+req.body.correo+"', '"+req.body.clave+"', '"+req.body.sexo+"', '"+req.body.fecha_nacimiento+"');", function(err, result) {
-            if(err) {
-                return console.error('error running query', err);
-            }
-        
-            //console.log(result);
-            client.end();
-            return res.json(result.rows);
-            
-        });
-        
-    });
-});
-
 //RESPUESTA
 app.get('/mostrarRespuesta/:id',(req,res)=>{
     var client = new pg.Client(conString);
@@ -264,7 +239,7 @@ app.post('/GuardarUsuario', (req, res) => {
         
         console.log("miau "+util.inspect(req,false,null));
         
-        client.query("INSERT INTO  usuario  (nombre,apellido,numero,correo,clave,sexo,fecha_nacimiento) VALUES ('"+req.body.nombre+"', '"+req.body.apellido+"', '"+req.body.numero+"', '"+req.body.correo+"', '"+req.body.clave+"', '"+req.body.sexo+"', '"+req.body.fecha_nacimiento+"');", function(err, result) {
+        client.query("INSERT INTO  usuario  (nombre,apellido,correo,clave,sexo,fecha_nacimiento) VALUES ('"+req.body.nombre+"', '"+req.body.apellido+"', '"+req.body.correo+"', '"+req.body.clave+"', '"+req.body.sexo+"', '"+req.body.fecha_nacimiento+"');", function(err, result) {
             if(err) {
                 return console.error('error running query', err);
             }
@@ -332,7 +307,7 @@ app.put('/actualizarInformacion',(req,res)=>{
             return res.status(500).json({success: false, data: err});
         }
   
-        client.query("UPDATE informacion SET universidad='"+req.body.universidad+"', ciudad='"+req.body.ciudad+"', pais='"+req.body.pais+"',carrera='"+req.body.carrera+"',preferencia='"+ req.body.preferencia +"',descripcion='"+req.body.descripcion+"',instagram='"+req.body.instagram+"', WHERE id='" + id + "';", function(err, result) {
+        client.query("UPDATE informacion SET universidad='"+req.body.universidad+"', ciudad='"+req.body.ciudad+"', pais='"+req.body.pais+"',carrera='"+req.body.carrera+"',preferencia='"+ req.body.preferencia +"',descripcion='"+req.body.descripcion+"',instagram='"+req.body.instagram+"',numero='"+req.body.numero+"', WHERE id='" + id + "';", function(err, result) {
             
             if(err) {
                   return console.error('error running query', err);
@@ -405,7 +380,7 @@ app.post('/GuardarInformacion', (req, res) => {
       
         console.log("miau "+util.inspect(req,false,null));
        
-        client.query("INSERT INTO  informacion  (idusuario,universidad,ciudad,pais,carrera,descripcion,instagram,preferencia) VALUES ("+req.body.idusuario+", '"+req.body.universidad+"', '"+req.body.ciudad+"', '"+req.body.pais+"', '"+req.body.carrera+"','"+req.body.descripcion+"', '"+req.body.instagram+"', '"+req.body.preferencia+"');", function(err, result) {
+        client.query("INSERT INTO  informacion  (idusuario,universidad,ciudad,pais,carrera,descripcion,instagram,preferencia,numero) VALUES ("+req.body.idusuario+", '"+req.body.universidad+"', '"+req.body.ciudad+"', '"+req.body.pais+"', '"+req.body.carrera+"','"+req.body.descripcion+"', '"+req.body.instagram+"', '"+req.body.preferencia+"','"+req.body.numero+"');", function(err, result) {
             if(err) {
                 return console.error('error running query', err);
             }
