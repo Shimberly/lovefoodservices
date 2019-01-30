@@ -243,7 +243,7 @@ app.post('/GuardarUsuario', (req, res) => {
             if(err) {
                 return console.error('error running query', err);
             }
-        
+            
             //console.log(result);
             client.end();
             return res.json(result.rows);
@@ -392,4 +392,50 @@ app.post('/GuardarInformacion', (req, res) => {
        
     });
 });
- 
+app.get('/ultimoidusuario',(req,res)=>{
+    var client = new pg.Client(conString);
+  
+    client.connect(function(err) {
+       if(err) {
+           return console.error('could not connect to postgres', err);
+           return res.status(500).json({success: false, data: err});
+       }
+
+       client.query('SELECT TOP 1 id from usuario order by id desc;', function(err, result) {
+           if(err) {
+               return console.error('error running query', err);
+           }
+          
+           //console.log(result);
+            client.end();
+           return res.json(result.rows);
+      
+       });
+      
+   });
+    
+});
+app.get('/generarinformacion/:idusuario',(req,res)=>{
+    var client = new pg.Client(conString);
+    var idusuario=req.params.idusuario;
+
+    client.connect(function(err) {
+       if(err) {
+           return console.error('could not connect to postgres', err);
+           return res.status(500).json({success: false, data: err});
+       }
+
+       client.query("INSERT INTO  informacion  (idusuario,universidad,ciudad,descripcion,instagram,preferencia,numero) VALUES ("+idusuario+", '', '','', '', '','');", function(err, result) {
+           if(err) {
+               return console.error('error running query', err);
+           }
+          
+           //console.log(result);
+            client.end();
+           return res.json(result.rows);
+      
+       });
+      
+   });
+    
+});
