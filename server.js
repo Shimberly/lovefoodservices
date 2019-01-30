@@ -401,7 +401,7 @@ app.get('/ultimoidusuario',(req,res)=>{
            return res.status(500).json({success: false, data: err});
        }
 
-       client.query('SELECT TOP 1 id from usuario order by id desc', function(err, result) {
+       client.query('SELECT id from usuario order by id desc LIMIT 1', function(err, result) {
            if(err) {
                return console.error('error running query', err);
            }
