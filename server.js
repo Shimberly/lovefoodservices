@@ -344,9 +344,9 @@ app.delete('/eliminarInformacion',(req,res)=>{
   
 });
 
-app.get('/mostrarInformacion/:id',(req,res)=>{
+app.get('/mostrarInformacion/:idusuario',(req,res)=>{
     var client = new pg.Client(conString);
-    var id=req.params.id;
+    var idusuario=req.params.idusuario;
   
     client.connect(function(err) {
        if(err) {
@@ -354,7 +354,7 @@ app.get('/mostrarInformacion/:id',(req,res)=>{
            return res.status(500).json({success: false, data: err});
        }
 
-       client.query('SELECT * FROM informacion WHERE id=' + id + ';', function(err, result) {
+       client.query('SELECT * FROM informacion WHERE idusuario=' + idusuario + ';', function(err, result) {
            if(err) {
                return console.error('error running query', err);
            }
