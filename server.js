@@ -182,7 +182,7 @@ app.get('/listarRespuestas', (req, res, next) => {
 
 app.put('/actualizarRespuesta',(req,res)=>{
     var client = new pg.Client(conString);
-    var id=req.body.id;
+    var idusuario=req.body.idusuario;
     
     client.connect(function(err) {
         if(err) {
@@ -190,7 +190,7 @@ app.put('/actualizarRespuesta',(req,res)=>{
             return res.status(500).json({success: false, data: err});
         }
   
-        client.query("UPDATE respuesta SET rspVerde='"+req.body.rspVerde+"', rspDesayunoSalado='"+req.body.rspDesayunoSalado+"',rspDesayunoDulce='"+req.body.rspDesayunoDulce+"',rspAlmuerzo='"+req.body.rspAlmuerzo+"',rspMarisco='"+req.body.rspMarisco+"', rspSopa='"+req.body.rspSopa+"', rspCena='"+req.body.rspCena+"', rspComidaTipicaCosta='"+req.body.rspComidaTipicaCosta+"', rspComidaTipicaSierra='"+req.body.rspComidaTipicaSierra+"', rspComidaTipicaOriente='"+req.body.rspComidaTipicaOriente+"', rspProteina='"+req.body.rspProteina+"', rspPostres='"+req.body.rspPostres+"' , rspSaboresDulces='"+req.body.rspSaboresDulces+"', rspBebida='"+req.body.rspBebida+"', rspComidaExtranjera='"+req.body.rspComidaExtranjera+"', rspComidaRapida='"+req.body.rspComidaRapida+"' WHERE id='" + id + "';", function(err, result) {
+        client.query("UPDATE respuesta SET rspverde='"+req.body.rspverde+"',rspdesayunosalado='"+req.body.rspdesayunosalado+"',rspdesayunodulce='"+req.body.rspdesayunodulce+"',rspalmuerzo='"+req.body.rspalmuerzo+"',rspmarisco='"+req.body.rspmarisco+"',rspsopa='"+req.body.rspsopa+"',rspcena='"+req.body.rspcena+"',rspcomidatipicacosta='"+req.body.rspcomidatipicacosta+"',rspcomidatipicasierra='"+req.body.rspcomidatipicasierra+"',rspcomidatipicaoriente='"+req.body.rspcomidatipicaoriente+"',rspproteina='"+req.body.rspproteina+"',rsppostres='"+req.body.rsppostres+"',rspsaboresdulces='"+req.body.rspsaboresdulces+"',rspbebida='"+req.body.rspbebida+"',rspcomidaextranjera='"+req.body.rspcomidaextranjera+"',rspcomidarapida='"+req.body.rspcomidarapida+"' WHERE idusuario='" + idusuario + "';", function(err, result) {
             
             if(err) {
                   return console.error('error running query', err);
