@@ -439,3 +439,28 @@ app.get('/generarinformacion/:idusuario',(req,res)=>{
    });
     
 });
+
+app.get('/mostrarTodo/:idusuario',(req,res)=>{
+    var client = new pg.Client(conString);
+    var idusuario=req.params.idusuario;
+
+    client.connect(function(err) {
+       if(err) {
+           return console.error('could not connect to postgres', err);
+           return res.status(500).json({success: false, data: err});
+       }
+
+       client.query('SELECT U.*,I.*,R.* FROM usuario U,informacion I,respuesta R WHERE U.id='+idusuario+' AND I.idusuario='+idusuario+' AND R.idusuario='+idusuario+';', function(err, result) {
+           if(err) {
+               return console.error('error running query', err);
+           }
+          
+           //console.log(result);
+            client.end();
+           return res.json(result.rows);
+      
+       });
+      
+   });
+    
+});
