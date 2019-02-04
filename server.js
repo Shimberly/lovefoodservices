@@ -306,7 +306,7 @@ app.put('/actualizarInformacion',(req,res)=>{
             return console.error('could not connect to postgres', err);
         }
   
-        client.query("UPDATE informacion SET universidad='"+req.body.universidad+"',ciudad='"+req.body.ciudad+"',preferencia='"+ req.body.preferencia+"',descripcion='"+req.body.descripcion+"',instagram='"+req.body.instagram+"',numero='"+req.body.numero+"' WHERE idusuario='" + idusuario + "';", function(err, result) {
+        client.query("UPDATE informacion SET universidad='"+req.body.universidad+"',ciudad='"+req.body.ciudad+"',preferencia='"+ req.body.preferencia+"',descripcion='"+req.body.descripcion+"',instagram='"+req.body.instagram+"',numero='"+req.body.numero+"' foto='"+req.body.foto+"' WHERE idusuario='" + idusuario + "';", function(err, result) {
             
             if(err) {
                   return console.error('error running query', err);
@@ -379,7 +379,7 @@ app.post('/GuardarInformacion', (req, res) => {
       
         console.log("miau "+util.inspect(req,false,null));
        
-        client.query("INSERT INTO  informacion  (idusuario,universidad,ciudad,descripcion,instagram,preferencia,numero) VALUES ("+req.body.idusuario+", '"+req.body.universidad+"', '"+req.body.ciudad+"','"+req.body.descripcion+"', '"+req.body.instagram+"', '"+req.body.preferencia+"','"+req.body.numero+"');", function(err, result) {
+        client.query("INSERT INTO  informacion  (idusuario,universidad,ciudad,descripcion,instagram,preferencia,numero,foto) VALUES ("+req.body.idusuario+", '"+req.body.universidad+"', '"+req.body.ciudad+"','"+req.body.descripcion+"', '"+req.body.instagram+"', '"+req.body.preferencia+"','"+req.body.numero+"','"+req.body.foto+"');", function(err, result) {
             if(err) {
                 return console.error('error running query', err);
             }
