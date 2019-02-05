@@ -425,7 +425,7 @@ app.get('/generarinformacion/:idusuario',(req,res)=>{
            return res.status(500).json({success: false, data: err});
        }
 
-       client.query("INSERT INTO  informacion  (idusuario,universidad,ciudad,descripcion,instagram,preferencia,numero) VALUES ("+idusuario+", '', '','', '', '','');", function(err, result) {
+       client.query("INSERT INTO  informacion  (idusuario,universidad,ciudad,descripcion,instagram,preferencia,numero,foto) VALUES ("+idusuario+", '', '','', '', '','','');", function(err, result) {
            if(err) {
                return console.error('error running query', err);
            }
