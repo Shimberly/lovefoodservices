@@ -5,6 +5,7 @@ var http = require('http'),
 
 var multer = require('multer'); 
 const pg    = require('pg');
+const router = express.Router();
 
 pg.defaults.ssl = true;
 var conString = "postgres://lfginsenmkkkri:4ac5d7ee37cb823610577318946c21e64f5db453e3aaa7b0f14221b2983bf92a@ec2-54-235-68-3.compute-1.amazonaws.com:5432/d9ms119o8u5lqi";
@@ -425,7 +426,7 @@ app.get('/generarinformacion/:idusuario',(req,res)=>{
            return res.status(500).json({success: false, data: err});
        }
 
-       client.query("INSERT INTO  informacion  (idusuario,universidad,ciudad,descripcion,instagram,preferencia,numero) VALUES ("+idusuario+", '', '','', '', '','');", function(err, result) {
+       client.query("INSERT INTO  informacion  (idusuario,universidad,ciudad,descripcion,instagram,preferencia,numero,foto) VALUES ("+idusuario+", '', '','', '', '','','');", function(err, result) {
            if(err) {
                return console.error('error running query', err);
            }
@@ -450,7 +451,7 @@ app.get('/mostrarTodo/:idusuario',(req,res)=>{
            return res.status(500).json({success: false, data: err});
        }
 
-       client.query('SELECT U.*,I.*,R.* FROM usuario U,informacion I,respuesta R WHERE U.id='+idusuario+' AND I.idusuario='+idusuario+' AND R.idusuario='+idusuario+';', function(err, result) {
+       client.query('SELECT U.sexo,I.preferencia,R.* FROM usuario U,informacion I,respuesta R WHERE U.id='+idusuario+' AND I.idusuario='+idusuario+' AND R.idusuario='+idusuario+';', function(err, result) {
            if(err) {
                return console.error('error running query', err);
            }
@@ -463,4 +464,133 @@ app.get('/mostrarTodo/:idusuario',(req,res)=>{
       
    });
     
+});
+
+app.get('/match/:idusuario',(req,res)=>{
+    var client = new pg.Client(conString);
+    var idusuario=req.params.idusuario;
+    var datosUsuario;
+    var datosTodos;
+    client.connect(function(err) {
+       if(err) {
+           return console.error('could not connect to postgres', err);
+       }
+
+       client.query('SELECT U.sexo,I.preferencia,R.* FROM usuario U,informacion I,respuesta R WHERE U.id='+idusuario+' AND I.idusuario='+idusuario+' AND R.idusuario='+idusuario+';', function(err, result) {
+           if(err) {
+               return console.error('error running query', err);
+           }
+            datosUsuario=result.rows;
+            if (datosUsuario.length != 0) {
+                //response.push({'result' : 'success', 'data' : rows});
+                console.log("bine");
+                client.query('SELECT U.sexo,U.nombre,I.preferencia,R.* FROM usuario U,informacion I,respuesta R WHERE I.idusuario=U.id AND R.idusuario=U.id', function(err, result) {
+                    if(err) {
+                        return console.error('error running query', err);
+                    }
+                    if (result.rows.length != 0) {
+                        console.log("bieeen");
+                        //console.log(result.rows);
+                        datosTodos=result.rows;
+                        //return(result.rows);
+                        //return res.json(datosTodos);
+                        var datosMatch=[];
+                        var matchCoincidencias=[];
+                        console.log(datosUsuario);
+                        datosTodos.forEach(user => {
+                            var coincidencias=0;
+                            //console.log("yo: "+(user.sexo+"es"));
+                            //console.log("yo: "+datosUsuario[0].preferencia);
+                            if(user.id!=datosUsuario[0].idusuario){
+                                if(user.preferencia == datosUsuario[0].sexo){
+                                    if(datosUsuario[0].preferencia == user.sexo){
+                                        //datosMatch.push(user);
+                                        //console.log("entro");
+                                        if(user.rspverde==datosUsuario[0].rspverde){
+                                            coincidencias++;
+                                        }
+                                        if(user.rspdesayunosalado==datosUsuario[0].rspdesayunosalado){
+                                            coincidencias++;
+                                            
+                                        }
+                                        if(user.rspdesayunodulce==datosUsuario[0].rspdesayunodulce){
+                                            coincidencias++;
+                                        }
+                                        if(user.rspalmuerzo==datosUsuario[0].rspalmuerzo){
+                                            coincidencias++;
+                                        }
+                                        if(user.rspmarisco==datosUsuario[0].rspmarisco){
+                                            coincidencias++;
+                                        }
+                                        if(user.rspsopa==datosUsuario[0].rspsopa){
+                                            coincidencias++;
+                                        }
+                                        if(user.rspcena==datosUsuario[0].rspcena){
+                                            coincidencias++;
+                                        }
+                                        if(user.rspcomidatipicacosta==datosUsuario[0].rspcomidatipicacosta){
+                                            coincidencias++;
+                                        }
+                                        if(user.rspcomidatipicasierra==datosUsuario[0].rspcomidatipicasierra){
+                                            coincidencias++;
+                                        }
+                                        if(user.rspcomidatipicaoriente==datosUsuario[0].rspcomidatipicaoriente){
+                                            coincidencias++;
+                                        }
+                                        if(user.rspproteina==datosUsuario[0].rspproteina){
+                                            coincidencias++;
+                                        }
+                                        if(user.rsppostres==datosUsuario[0].rsppostres){
+                                            coincidencias++;
+                                        }
+                                        if(user.rspsaboresdulces==datosUsuario[0].rspsaboresdulces){
+                                            coincidencias++;
+                                        }
+                                        if(user.rspbebida==datosUsuario[0].rspbebida){
+                                            coincidencias++;
+                                        }
+                                        if(user.rspcomidaextranjera==datosUsuario[0].rspcomidaextranjera){
+                                            coincidencias++;
+                                        }
+                                        if(user.rspcomidarapida==datosUsuario[0].rspcomidarapida){
+                                            
+                                            coincidencias++;
+                                        }
+                                    }
+                                    
+                                }
+                            }
+                            if(coincidencias>0){
+                                //matchCoincidencias.push(coincidencias);
+                                user.coincidencias=coincidencias;
+                                datosMatch.push(user);
+                            }
+                            console.log(coincidencias);
+                            
+                        });
+                        datosMatch.sort(function(a,b){
+                            //return a.attributes.OBJECTID - b.attributes.OBJECTID;
+                            if(a.coincidencias == b.coincidencias)
+                                return 0;
+                            if(a.coincidencias < b.coincidencias)
+                                return 1;
+                            if(a.coincidencias > b.coincidencias)
+                                return -1;
+                        });
+                        return res.json(datosMatch);
+
+
+
+
+                    } else {
+                        response.push({'result' : 'error', 'msg' : 'No Results Found'});
+                    }
+                });
+                
+            } else {
+                response.push({'result' : 'error', 'msg' : 'No Results Found'});
+            }
+            
+       });
+   });
 });
