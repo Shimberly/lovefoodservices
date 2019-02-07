@@ -484,7 +484,7 @@ app.get('/match/:idusuario',(req,res)=>{
             if (datosUsuario.length != 0) {
                 //response.push({'result' : 'success', 'data' : rows});
                 console.log("bine");
-                client.query('SELECT U.sexo,U.nombre,I.preferencia,R.* FROM usuario U,informacion I,respuesta R WHERE I.idusuario=U.id AND R.idusuario=U.id', function(err, result) {
+                client.query('SELECT U.*,I.*,R.* FROM usuario U,informacion I,respuesta R WHERE I.idusuario=U.id AND R.idusuario=U.id', function(err, result) {
                     if(err) {
                         return console.error('error running query', err);
                     }
