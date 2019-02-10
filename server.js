@@ -501,7 +501,7 @@ app.get('/match/:idusuario',(req,res)=>{
                             var coincidencias=0;
                             //console.log("yo: "+(user.sexo+"es"));
                             //console.log("yo: "+datosUsuario[0].preferencia);
-                            if(user.id!=datosUsuario[0].idusuario){
+                            if(user.idusuario!=datosUsuario[0].idusuario){
                                 if(user.preferencia == datosUsuario[0].sexo){
                                     if(datosUsuario[0].preferencia == user.sexo){
                                         //datosMatch.push(user);
@@ -583,11 +583,13 @@ app.get('/match/:idusuario',(req,res)=>{
 
 
                     } else {
+                        return res.json(result.rows);
                         response.push({'result' : 'error', 'msg' : 'No Results Found'});
                     }
                 });
                 
             } else {
+                return res.json(result.rows);
                 response.push({'result' : 'error', 'msg' : 'No Results Found'});
             }
             
